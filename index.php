@@ -16,10 +16,17 @@
 
     <link rel="stylesheet" href="assets/css/style.css">
 
-    <link rel="icon"
-        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⛽</text></svg>">
+    <!-- Favicon padrão (fallback) -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png">
+
+    <!-- Apple Touch Icon (para iOS) -->
     <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png">
+
+    <!-- Ícone maior (Android/Chrome e fallback para PWA) -->
     <link rel="icon" type="image/png" sizes="512x512" href="/icons/apple-touch-icon-512.png">
+
+    <!-- Manifesto para Android/Chrome -->
     <link rel="manifest" href="/icons/site.webmanifest">
     <meta name="theme-color" content="#ffffff">
 </head>
