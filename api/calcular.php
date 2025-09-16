@@ -3,77 +3,67 @@
 // Define o cabeçalho da resposta como JSON
 header('Content-Type: application/json');
 
-// Garante que o método da requisição seja POST
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    http_response_code(405); // Method Not Allowed
+
+$gasoline = floatval($_POST['gasoline'] ?? 0);
+$ethanol = floatval($_POST['ethanol'] ?? 0);
+$consumoGasolina = floatval($_POST['consumoGasolina'] ?? 0);
+$consumoEtanol = floatval($_POST['consumoEtanol'] ?? 0);
+
+
+if ($gasoline <= 0 || $ethanol <= 0) {
     echo json_encode([
-        'error' => true,
-        'message' => 'Método não permitido. Utilize POST.'
+        "error" => true,
+        "message" => "Valores inválidos de preço."
     ]);
     exit;
 }
 
-// Verifica se os dados foram enviados
-if (!isset($_POST['gasoline']) || !isset($_POST['ethanol'])) {
-    http_response_code(400); // Bad Request
-    echo json_encode([
-        'error' => true,
-        'message' => 'Parâmetros incompletos. Envie os preços da gasolina e do etanol.'
-    ]);
+
+// --- Se o usuário informou consumos reais ---
+if ($consumoGasolina > 0 && $consumoEtanol > 0) {
+    $custoKmGasolina = $gasoline / $consumoGasolina;
+    $custoKmEtanol = $ethanol / $consumoEtanol;
+
+
+    if ($custoKmEtanol < $custoKmGasolina) {
+        echo json_encode([
+            "error" => false,
+            "result" => "Etanol",
+            "message" => "Etanol custa R$ " . number_format($custoKmEtanol, 2, ',', '.') . " por km rodado, contra R$ " . number_format($custoKmGasolina, 2, ',', '.') . " da gasolina."
+        ]);
+    } else {
+        echo json_encode([
+            "error" => false,
+            "result" => "Gasolina",
+            "message" => "Gasolina custa R$ " . number_format($custoKmGasolina, 2, ',', '.') . " por km rodado, contra R$ " . number_format($custoKmEtanol, 2, ',', '.') . " do etanol."
+        ]);
+    }
     exit;
 }
 
-// Pega os valores e converte para float
-$gasolinePrice = floatval(str_replace(',', '.', $_POST['gasoline']));
-$ethanolPrice = floatval(str_replace(',', '.', $_POST['ethanol']));
 
-// Validação dos valores
-if ($gasolinePrice <= 0 || $ethanolPrice <= 0) {
-    http_response_code(400); // Bad Request
+/// --- Caso não tenha informado consumos, cai na regra dos 70% ---
+$limite = $gasoline * 0.70;
+$percentual = ($ethanol / $gasoline) * 100;
+
+if ($ethanol <= $limite) {
     echo json_encode([
-        'error' => true,
-        'message' => 'Os preços devem ser valores numéricos positivos.'
+        "error" => false,
+        "result" => "Etanol",
+        "message" => "O preço do etanol (R$ " . number_format($ethanol, 2, ',', '.') .
+            ") corresponde a " . number_format($percentual, 2, ',', '.') . "% do preço da gasolina (R$ " .
+            number_format($gasoline, 2, ',', '.') . "). O etanol compensa (até R$ " .
+            number_format($limite, 2, ',', '.') . ")."
     ]);
-    exit;
-}
-
-// --- Lógica Principal do Cálculo ---
-// A regra geral é que o etanol é vantajoso se o seu preço for até 70% do preço da gasolina.
-$ratio = $ethanolPrice / $gasolinePrice;
-$threshold = 0.70;
-
-$result = '';
-$message = '';
-
-if ($ratio <= $threshold) {
-    $result = 'Etanol';
-    $message = sprintf(
-        'O preço do etanol (R$ %.2f) corresponde a <strong>%.1f%%</strong> do preço da gasolina (R$ %.2f), que é menor ou igual ao limite de 70%%.',
-        $ethanolPrice,
-        $ratio * 100,
-        $gasolinePrice
-    );
 } else {
-    $result = 'Gasolina';
-    $message = sprintf(
-        'O preço do etanol (R$ %.2f) corresponde a <strong>%.1f%%</strong> do preço da gasolina (R$ %.2f), que é maior que o limite de 70%%.',
-        $ethanolPrice,
-        $ratio * 100,
-        $gasolinePrice
-    );
+    echo json_encode([
+        "error" => false,
+        "result" => "Gasolina",
+        "message" => "O preço do etanol (R$ " . number_format($ethanol, 2, ',', '.') .
+            ") corresponde a " . number_format($percentual, 2, ',', '.') . "% do preço da gasolina (R$ " .
+            number_format($gasoline, 2, ',', '.') . "). A gasolina compensa (etanol precisaria estar até R$ " .
+            number_format($limite, 2, ',', '.') . ")."
+    ]);
 }
-
-// Monta a resposta de sucesso
-$response = [
-    'error' => false,
-    'result' => $result,
-    'ratio' => round($ratio, 4),
-    'gasoline_price' => $gasolinePrice,
-    'ethanol_price' => $ethanolPrice,
-    'message' => $message
-];
-
-http_response_code(200); // OK
-echo json_encode($response);
 
 ?>

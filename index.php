@@ -34,39 +34,57 @@
 
                         <form id="fuelForm">
                             <div class="mb-3">
-                                <label for="gasoline" class="form-label fw-medium">Preço da Gasolina (R$)</label>
-                                <input type="number" class="form-control form-control-lg" id="gasoline" name="gasoline"
+                                <label for="gasoline" class="form-label">Preço Gasolina (R$/L)</label>
+                                <input type="text" class="form-control" id="gasoline" name="gasoline"
                                     placeholder="Ex: 5.89" step="0.01" required>
                             </div>
 
-                            <div class="mb-4">
-                                <label for="ethanol" class="form-label fw-medium">Preço do Etanol (R$)</label>
-                                <input type="number" class="form-control form-control-lg" id="ethanol" name="ethanol"
+                            <div class="mb-3">
+                                <label for="ethanol" class="form-label">Preço Etanol (R$/L)</label>
+                                <input type="text" class="form-control" id="ethanol" name="ethanol"
                                     placeholder="Ex: 3.99" step="0.01" required>
+                            </div>
+
+                            <!-- Botão para abrir campos de consumo -->
+                            <div class="mb-3">
+                                <a href="#" id="toggleConsumo">➕ Usar consumo do veículo</a>
+                            </div>
+
+                            <!-- Campos de consumo inicialmente escondidos -->
+                            <div id="consumoFields" class="border rounded p-3 mb-3" style="display:none;">
+                                <div class="mb-3">
+                                    <label for="consumoGasolina" class="form-label">Consumo com Gasolina (km/L)</label>
+                                    <input type="number" step="0.1" class="form-control" id="consumoGasolina"
+                                        name="consumoGasolina" placeholder="Ex: 10">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="consumoEtanol" class="form-label">Consumo com Etanol (km/L)</label>
+                                    <input type="number" step="0.1" class="form-control" id="consumoEtanol"
+                                        name="consumoEtanol" placeholder="Ex: 7">
+                                </div>
                             </div>
 
                             <div class="d-grid">
                                 <button type="submit" class="btn btn-primary btn-lg fw-bold">
-                                    <span class="spinner-border spinner-border-sm d-none" role="status"
-                                        aria-hidden="true"></span>
-                                    Calcular Vantagem
+                                    <span class="spinner-border spinner-border-sm d-none" role="status"></span>
+                                    Calcular
                                 </button>
                             </div>
                         </form>
 
-                        <div id="resultArea" class="mt-4" style="display: none;">
-                        </div>
+                        <div id="resultArea" class="mt-4" style="display:none;"></div>
                     </div>
-                </div>
-                <div class="text-center mt-3">
-                    <small class="text-muted">© 2025 Todos os direitos reservados</small><br>
-                    <small class="text-muted">By <a href="https://www.linkedin.com/in/mateusbrito93/" target="_blank">Mateus Brito</a></small>
+                    <div class="text-center mt-3">
+                        <small class="text-muted">© 2025 Todos os direitos reservados</small><br>
+                        <small class="text-muted">By <a href="https://www.linkedin.com/in/mateusbrito93/"
+                                target="_blank">Mateus Brito</a></small>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <script src="assets/js/script.js"></script>
+        <script src="assets/js/script.js"></script>
 
 </body>
 
