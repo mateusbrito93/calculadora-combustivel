@@ -1,51 +1,220 @@
-/* Usando a fonte Poppins importada do Google Fonts */
+/* Definição de variáveis de cor para o tema claro (padrão) */
+:root {
+    --bg-color: #f0f2f5;
+    --card-bg-color: #ffffff;
+    --text-color: #212529;
+    --label-color: #343a40;
+    --muted-text-color: #6c757d;
+    --border-color: #dee2e6;
+    --input-bg-color: #fff;
+    --btn-primary-bg: #007bff;
+    --btn-primary-hover: #0056b3;
+    --link-color: #007bff;
+    --toggle-link-color: #007bff;
+    --control-button-bg: #e9ecef;
+    --control-button-border: #ced4da;
+    --control-button-text: #495057;
+    --control-button-hover-bg: #dee2e6;
+    --switch-track-color: #ccc;
+}
+
+/* Definição de variáveis para o tema escuro */
+[data-theme="dark"] {
+    --bg-color: #1a1a1a;
+    --card-bg-color: #2b2b2b;
+    --text-color: #e0e0e0;
+    --label-color: #f8f9fa;
+    --muted-text-color: #adb5bd;
+    --border-color: #444;
+    --input-bg-color: #3a3a3a;
+    --btn-primary-bg: #0d6efd;
+    --btn-primary-hover: #0a58ca;
+    --link-color: #8ab4f8;
+    --toggle-link-color: #8ab4f8;
+    --control-button-bg: #3a3a3a;
+    --control-button-border: #555;
+    --control-button-text: #e0e0e0;
+    --control-button-hover-bg: #4a4a4a;
+    --switch-track-color: #555;
+}
+
 body {
-    background-color: #f0f2f5;
+    background-color: var(--bg-color);
     font-family: 'Poppins', sans-serif;
+    color: var(--text-color);
+    transition: background-color 0.3s, color 0.3s;
 }
 
 .calculator-card {
-    border: none;
+    background-color: var(--card-bg-color);
+    border: 1px solid var(--border-color);
     border-radius: 15px;
     transition: all 0.3s ease-in-out;
 }
 
-.calculator-card:hover {
-    transform: translateY(-5px);
+.card-title {
+    color: var(--text-color);
 }
 
-.card-title {
-    color: #333;
+.card-subtitle.text-muted {
+    color: var(--muted-text-color) !important;
+}
+
+.form-label {
+    color: var(--label-color);
+    font-weight: 500;
+}
+
+.text-muted {
+    color: var(--muted-text-color) !important;
+}
+
+a {
+    color: var(--link-color);
+    text-decoration: none;
+}
+
+.toggle-link {
+    color: var(--toggle-link-color);
+    font-weight: 500;
+}
+
+.form-control {
+    background-color: var(--input-bg-color);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
 }
 
 .btn-primary {
-    background-color: #007bff;
-    border-color: #007bff;
-    padding: 12px;
-    font-size: 1.1rem;
-    transition: background-color 0.2s;
+    background-color: var(--btn-primary-bg);
+    border-color: var(--btn-primary-bg);
 }
 
 .btn-primary:hover {
-    background-color: #0056b3;
-    border-color: #0056b3;
+    background-color: var(--btn-primary-hover);
+    border-color: var(--btn-primary-hover);
 }
 
-.form-control-lg {
-    padding: 12px 15px;
-    font-size: 1.1rem;
-}
-
-/* Estilos para a área de resultado */
-.alert {
+/* --- Controles de Tema e Idioma --- */
+.controls-container {
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
     align-items: center;
-    text-align: center;
-    border-radius: 10px;
+    margin-bottom: 1.5rem;
+    padding: 0 10px;
 }
 
-.alert h4 {
-    margin-bottom: 0.5rem;
-    font-weight: 600;
+/* Seletor de Idiomas com Bandeiras */
+.language-switcher {
+    display: flex;
+    gap: 8px;
+}
+
+.language-switcher .lang-btn {
+    background: var(--control-button-bg);
+    border: 1px solid var(--control-button-border);
+    border-radius: 8px;
+    font-size: 1.4rem;
+    cursor: pointer;
+    opacity: 0.6;
+    transition: all 0.2s ease-in-out;
+    padding: 5px 10px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.language-switcher .lang-btn img {
+    width: 32px;
+    /* Define uma largura fixa para o container da imagem */
+    height: 24px;
+    /* Define uma altura fixa */
+    object-fit: contain;
+    /* Garante que a imagem se ajuste dentro do container sem distorcer */
+    display: block;
+}
+
+.language-switcher .lang-btn.active {
+    opacity: 1;
+    border-color: var(--btn-primary-bg);
+    box-shadow: 0 0 0 2px rgba(var(--btn-primary-bg), 0.2);
+}
+
+.language-switcher .lang-btn:hover {
+    opacity: 0.8;
+    background-color: var(--control-button-hover-bg);
+}
+
+/* --- NOVO: Estilo para o Seletor de Tema (Switch) --- */
+.theme-switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.theme-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--switch-track-color);
+    transition: .4s;
+    border-radius: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 5px;
+}
+
+.slider-icon {
+    color: #f0c400;
+    /* Cor do ícone de sol */
+    transition: .4s;
+}
+
+.slider-icon.moon {
+    color: #f0f2f5;
+    /* Cor do ícone de lua */
+}
+
+/* O "knob" do switch */
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+    z-index: 2;
+}
+
+input:checked+.slider {
+    background-color: var(--btn-primary-bg);
+}
+
+input:checked+.slider:before {
+    transform: translateX(26px);
+}
+
+/* Esconde ícone de sol quando não está checado (tema claro) */
+input:not(:checked)+.slider .slider-icon.sun {
+    opacity: 0;
+}
+
+/* Esconde ícone de lua quando está checado (tema escuro) */
+input:checked+.slider .slider-icon.moon {
+    opacity: 0;
 }
