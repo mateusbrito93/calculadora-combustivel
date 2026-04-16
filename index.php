@@ -125,6 +125,7 @@
         </div>
     </div>
     <script src="assets/js/script.js"></script>
+    <script></script>
 </body>
 
 </html>
