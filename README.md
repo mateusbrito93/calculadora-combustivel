@@ -11,7 +11,7 @@ Um sistema web prático e eficiente desenvolvido para ajudar os motoristas a des
 
 * **Comparativo de Custo-Benefício:** Calcula instantaneamente a viabilidade entre Etanol e Gasolina utilizando o cálculo padrão (regra dos 70%).
 * **Processamento Rápido:** Utiliza JavaScript para validação de dados no frontend e respostas dinâmicas, com o PHP atuando no processamento das lógicas no backend.
-* **Histórico de Cálculos (Opcional):** Preparado para expandir e armazenar os últimos cálculos realizados em sessão ou banco de dados.
+* **Cálculo via Consumo:** Também há opção de calcular o melhor combustível a ser utilizado através do consumo do veículo.
 * **Interface Responsiva:** Design intuitivo e acessível para fácil uso na tela do celular, direto no posto de gasolina.
 
 ## 🛠️ Tecnologias Utilizadas
